@@ -7,6 +7,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-blue-950 min-h-screen">
-    @yield('content')
+    {{ $slot }}
 </body>
 </html>
