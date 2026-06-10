@@ -15,7 +15,7 @@
         </div>
         @endforeach
 
-        <a href="#" class="text-yellow-400 border-2 border-yellow-400 px-8 py-3 text-lg font-bold hover:bg-yellow-400 hover:text-blue-950 transition">
+        <a href="{{ route('battle') }}" class="text-yellow-400 border-2 border-yellow-400 px-8 py-3 text-lg font-bold hover:bg-yellow-400 hover:text-blue-950 transition">
             Start Adventure
         </a>
     </div>
