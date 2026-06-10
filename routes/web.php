@@ -7,5 +7,6 @@ Route::get('/', function () {
 });
 
 Route::get('/character-select', function () {
-    return view('character-select');
+    $characters = \App\Models\Character::all();
+    return view('character-select', compact('characters'));
 })->name('character.select');
