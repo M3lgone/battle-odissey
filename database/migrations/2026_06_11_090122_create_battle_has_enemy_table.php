@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class () extends Migration {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('battle_has_enemy', function (Blueprint $table) {
+            $table->foreignId('battle_id')->constrained('battles');
+            $table->foreignId('enemy_id')->constrained('enemies');
+            $table->primary(['battle_id', 'enemy_id']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('battle_has_enemy');
+    }
+};
