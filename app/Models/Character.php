@@ -13,4 +13,9 @@ class Character extends Model
         'max_health_points',
         'max_magic_points',
     ];
+
+    public function battles()
+    {
+        return $this->hasMany(Battle::class);
+    }
 }

@@ -13,4 +13,9 @@ class Enemy extends Model
         'attack',
         'defense',
     ];
+
+    public function battles()
+    {
+        return $this->belongsToMany(Battle::class, 'battle_has_enemy');
+    }
 }
