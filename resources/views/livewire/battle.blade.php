@@ -7,8 +7,8 @@
             class="absolute bottom-64 left-60 w-96 h-96 object-contain">
 
         <img src="{{ asset('images/goblin.png') }}" alt="Goblin" 
-            class="absolute bottom-64 right-40 w-96 h-96 object-contain">
-
+            wire:click="selectEnemy({{ $enemy->id }})"
+            class="absolute bottom-64 right-40 w-96 h-96 object-contain cursor-pointer transition duration-200 {{ $selectedEnemy == $enemy->id ? 'drop-shadow-[0_0_12px_red]' : 'hover:drop-shadow-[0_0_12px_red]' }}">
     </div>
 
     <div class="bg-blue-950 border-t-2 border-yellow-400 grid grid-cols-4 gap-4 p-4">

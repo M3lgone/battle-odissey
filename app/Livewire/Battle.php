@@ -40,6 +40,11 @@ class Battle extends Component
         $this->battle->enemies()->attach($this->enemy->id);
     }
 
+    public function selectEnemy($id)
+    {
+        $this->selectedEnemy = $id;
+    }
+
     public function attack()
     {
         $damage = $this->character->attack;
