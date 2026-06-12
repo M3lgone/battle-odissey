@@ -47,8 +47,12 @@ class Battle extends Component
 
     public function attack()
     {
+        if (!$this->selectedEnemy) {
+            return;
+        }
         $damage = $this->character->attack;
         $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $damage);
+        $this->selectedEnemy = null;
     }
 
     public function render()
