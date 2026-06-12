@@ -15,7 +15,9 @@
         
         <div class="border-2 border-yellow-400 p-4 flex flex-col gap-3">
             <h3 class="text-yellow-400 font-bold">Actions</h3>
-            <button class="text-yellow-400 border border-yellow-400 py-2 hover:bg-yellow-400 hover:text-blue-950 transition">
+            <button
+                wire:click="attack"
+                class="text-yellow-400 border border-yellow-400 py-2 hover:bg-yellow-400 hover:text-blue-950 transition">
                 Attack
             </button>
         </div>
@@ -32,7 +34,7 @@
 
         <div class="border-2 border-yellow-400 p-4">
             <h3 class="text-yellow-400 font-bold mb-2">{{ $enemy->enemy_name }}</h3>
-            <p class="text-yellow-400">HP: {{ $enemy->max_health_points }}</p>
+            <p class="text-yellow-400">HP: {{ $enemyCurrentHp }}</p>
             <p class="text-yellow-400">MP: {{ $enemy->max_magic_points }}</p>
         </div>
 
