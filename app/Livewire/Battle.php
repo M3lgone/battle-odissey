@@ -22,10 +22,10 @@ class Battle extends Component
     public int $enemyCurrentMp;
     public $selectedEnemy = null;
 
-    public function mount($character)
+    public function mount($character, $enemy)
     {
         $this->character = Character::find($character);
-        $this->enemy = Enemy::first();
+        $this->enemy = Enemy::find($enemy);
 
         $this->characterCurrentHp = $this->character->max_health_points;
         $this->characterCurrentMp = $this->character->max_magic_points;

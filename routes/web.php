@@ -10,4 +10,4 @@ Route::get('/', function () {
 
 Route::get('/character-select', CharacterSelect::class)->name('character.select');
 
-Route::get('/battle/{character}', Battle::class)->name('battle');
+Route::get('/battle/{character}/{enemy}', Battle::class)->name('battle');
