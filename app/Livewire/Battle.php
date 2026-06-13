@@ -53,6 +53,14 @@ class Battle extends Component
         $damage = $this->character->attack;
         $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $damage);
         $this->selectedEnemy = null;
+
+        $this->enemyTurn();
+    }
+
+    private function enemyTurn()
+    {
+        $damage = $this->enemy->attack;
+        $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
     }
 
     public function render()
