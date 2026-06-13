@@ -23,6 +23,7 @@ class Battle extends Component
     public $selectedEnemy = null;
     public array $battleLog = [];
     public bool $characterIsDefending = false;
+    public bool $enemyIsDefending = false;
 
     public function mount($character, $enemy)
     {
@@ -62,7 +63,14 @@ class Battle extends Component
         if (!$this->selectedEnemy) {
             return;
         }
+
         $damage = $this->character->attack;
+
+        if ($this->enemyIsDefending) {
+            $damage = max(1, $this->character->attack - $this->enemy->defense);
+            $this->enemyIsDefending = false;
+        }
+
         $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $damage);
         $this->addLog("You attacked {$this->getEnemyName()} for {$damage} damage.");
         $this->selectedEnemy = null;
@@ -80,14 +88,22 @@ class Battle extends Component
 
     private function enemyTurn()
     {
-        $damage = $this->enemy->attack;
+        $action = rand(1, 2);
 
-        if ($this->characterIsDefending) {
-            $damage = max(1, $this->enemy->attack - $this->character->defense);
-            $this->characterIsDefending = false;
+        if ($action === 1) {
+            $damage = $this->enemy->attack;
+
+            if ($this->characterIsDefending) {
+                $damage = max(1, $this->enemy->attack - $this->character->defense);
+                $this->characterIsDefending = false;
+            }
+
+            $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
+            $this->addLog("{$this->getEnemyName()} attacked you for {$damage} damage.");
+        } else {
+            $this->enemyIsDefending = true;
+            $this->addLog("{$this->getEnemyName()} is defending.");
         }
-        $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
-        $this->addLog("{$this->getEnemyName()} attacked you for {$damage} damage.");
     }
 
     private function addLog(string $message): void
