@@ -20,6 +20,11 @@
                 class="text-yellow-400 border border-yellow-400 py-2 hover:bg-yellow-400 hover:text-blue-950 transition">
                 Attack
             </button>
+            <button
+                wire:click="defend"
+                class="text-yellow-400 border border-yellow-400 py-2 hover:bg-yellow-400 hover:text-blue-950 transition">
+                Defend
+            </button>
         </div>
 
         <div class="border-2 border-yellow-400 p-4">

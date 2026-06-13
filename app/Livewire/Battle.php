@@ -22,6 +22,7 @@ class Battle extends Component
     public int $enemyCurrentMp;
     public $selectedEnemy = null;
     public array $battleLog = [];
+    public bool $characterIsDefending = false;
 
     public function mount($character, $enemy)
     {
@@ -69,9 +70,22 @@ class Battle extends Component
         $this->enemyTurn();
     }
 
+    public function defend()
+    {
+        $this->characterIsDefending = true;
+        $this->addLog("You are defending.");
+        $this->enemyTurn();
+
+    }
+
     private function enemyTurn()
     {
         $damage = $this->enemy->attack;
+
+        if ($this->characterIsDefending) {
+            $damage = max(1, $this->enemy->attack - $this->character->defense);
+            $this->characterIsDefending = false;
+        }
         $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
         $this->addLog("{$this->getEnemyName()} attacked you for {$damage} damage.");
     }
