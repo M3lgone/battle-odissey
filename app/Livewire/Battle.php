@@ -28,10 +28,7 @@ class Battle extends Component
         $this->character = Character::find($character);
         $this->enemy = Enemy::find($enemy);
 
-        $this->characterCurrentHp = $this->character->max_health_points;
-        $this->characterCurrentMp = $this->character->max_magic_points;
-        $this->enemyCurrentHp = $this->enemy->max_health_points;
-        $this->enemyCurrentMp = $this->enemy->max_magic_points;
+        $this->initializeCombatStats();
 
         $this->battle = BattleModel::create([
             'level' => '1',
@@ -41,9 +38,22 @@ class Battle extends Component
         $this->battle->enemies()->attach($this->enemy->id);
     }
 
+    private function initializeCombatStats(): void
+    {
+        $this->characterCurrentHp = $this->character->max_health_points;
+        $this->characterCurrentMp = $this->character->max_magic_points;
+        $this->enemyCurrentHp = $this->enemy->max_health_points;
+        $this->enemyCurrentMp = $this->enemy->max_magic_points;
+    }
+
     public function selectEnemy($id)
     {
         $this->selectedEnemy = $id;
+    }
+
+    public function getEnemyName(): string
+    {
+        return $this->enemy->enemy_name;
     }
 
     public function attack()
@@ -53,7 +63,7 @@ class Battle extends Component
         }
         $damage = $this->character->attack;
         $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $damage);
-        $this->addLog("You attacked {$this->enemy->enemy_name} for {$damage} damage.");
+        $this->addLog("You attacked {$this->getEnemyName()} for {$damage} damage.");
         $this->selectedEnemy = null;
 
         $this->enemyTurn();
@@ -63,7 +73,7 @@ class Battle extends Component
     {
         $damage = $this->enemy->attack;
         $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
-        $this->addLog("{$this->enemy->enemy_name} attacked you for {$damage} damage.");
+        $this->addLog("{$this->getEnemyName()} attacked you for {$damage} damage.");
     }
 
     private function addLog(string $message): void
