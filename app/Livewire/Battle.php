@@ -21,6 +21,7 @@ class Battle extends Component
     public int $enemyCurrentHp;
     public int $enemyCurrentMp;
     public $selectedEnemy = null;
+    public array $battleLog = [];
 
     public function mount($character, $enemy)
     {
@@ -52,6 +53,7 @@ class Battle extends Component
         }
         $damage = $this->character->attack;
         $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $damage);
+        $this->addLog("You attacked {$this->enemy->enemy_name} for {$damage} damage.");
         $this->selectedEnemy = null;
 
         $this->enemyTurn();
@@ -61,6 +63,12 @@ class Battle extends Component
     {
         $damage = $this->enemy->attack;
         $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
+        $this->addLog("{$this->enemy->enemy_name} attacked you for {$damage} damage.");
+    }
+
+    private function addLog(string $message): void
+    {
+        $this->battleLog[] = $message;
     }
 
     public function render()
