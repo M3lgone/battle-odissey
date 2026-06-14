@@ -24,10 +24,12 @@ class Battle extends Component
     public array $battleLog = [];
     public bool $characterIsDefending = false;
     public bool $enemyIsDefending = false;
+    public $selectedSkill = null;
 
     public function mount($character, $enemy)
     {
         $this->character = Character::find($character);
+        $this->character->load('skills');
         $this->enemy = Enemy::find($enemy);
 
         $this->initializeCombatStats();
@@ -84,6 +86,32 @@ class Battle extends Component
         $this->addLog("You are defending.");
         $this->enemyTurn();
 
+    }
+
+    public function selectSkill($id)
+    {
+        $this->selectedSkill = $id;
+    }
+
+    public function skill()
+    {
+        if (!$this->selectedSkill) {
+            return;
+        }
+
+        $skill = $this->character->skills->find($this->selectedSkill);
+
+        if ($this->characterCurrentMp < $skill->skill_cost_magic_points) {
+            $this->addLog("Not enough MP to use {$skill->skill_name}.");
+            return;
+        }
+
+        $this->characterCurrentMp -= $skill->skill_cost_magic_points;
+        $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $skill->damage_skill);
+        $this->addLog("You used {$skill->skill_name} for {$skill->damage_skill} damage.");
+        $this->selectedSkill = null;
+
+        $this->enemyTurn();
     }
 
     private function enemyTurn()
