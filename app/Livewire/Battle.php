@@ -25,6 +25,7 @@ class Battle extends Component
     public bool $characterIsDefending = false;
     public bool $enemyIsDefending = false;
     public $selectedSkill = null;
+    public bool $showSkills = false;
 
     public function mount($character, $enemy)
     {
@@ -90,7 +91,17 @@ class Battle extends Component
 
     public function selectSkill($id)
     {
+        if (!$this->selectedEnemy) {
+            return;
+        }
+
         $this->selectedSkill = $id;
+        $this->skill();
+    }
+
+    public function toggleSkills()
+    {
+        $this->showSkills = !$this->showSkills;
     }
 
     public function skill()
@@ -110,6 +121,7 @@ class Battle extends Component
         $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $skill->damage_skill);
         $this->addLog("You used {$skill->skill_name} for {$skill->damage_skill} damage.");
         $this->selectedSkill = null;
+        $this->showSkills = false;
 
         $this->enemyTurn();
     }
