@@ -38,11 +38,10 @@
 
         </div>
 
-        <div class="border-2 border-yellow-400 p-4">
-            <h3 class="text-yellow-400 font-bold mb-2">{{ ucfirst($character->class) }}</h3>
-            <p class="text-yellow-400">HP: {{ $characterCurrentHp}}</p>
-            <p class="text-yellow-400">MP: {{ $characterCurrentMp }}</p>
-        </div>
+        <livewire:battle.battle-character-stats 
+            :character="$character"
+            :characterCurrentHp="$characterCurrentHp"
+            :characterCurrentMp="$characterCurrentMp"/>
 
         <div class="border-2 border-yellow-400 p-4 h-32 overflow-y-auto" style="-ms-overflow-style: none; scrollbar-width: none;">
             <h3 class="text-yellow-400 font-bold mb-2">Battle Log</h3>
@@ -51,11 +50,10 @@
             @endforeach
         </div>
 
-        <div class="border-2 border-yellow-400 p-4">
-            <h3 class="text-yellow-400 font-bold mb-2">{{ $enemy->enemy_name }}</h3>
-            <p class="text-yellow-400">HP: {{ $enemyCurrentHp }}</p>
-            <p class="text-yellow-400">MP: {{ $enemyCurrentMp }}</p>
-        </div>
+        <livewire:battle.battle-enemy-stats 
+            :enemy="$enemy"
+            :enemyCurrentHp="$enemyCurrentHp"
+            :enemyCurrentMp="$enemyCurrentMp"/>
 
     </div>
 </div>
