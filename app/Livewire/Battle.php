@@ -150,7 +150,7 @@ class Battle extends Component
 
     private function addLog(string $message): void
     {
-        $this->battleLog[] = $message;
+        $this->dispatch('battleLog', message: $message);
     }
 
     public function render()
