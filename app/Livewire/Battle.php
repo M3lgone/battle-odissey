@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use App\Models\Character;
 use App\Models\Enemy;
 use App\Models\Battle as BattleModel;
@@ -51,9 +52,10 @@ class Battle extends Component
         $this->enemyCurrentMp = $this->enemy->max_magic_points;
     }
 
-    public function selectEnemy($id)
+    #[On('enemySelected')]
+    public function onEnemySelected($enemyId)
     {
-        $this->selectedEnemy = $id;
+        $this->selectedEnemy = $enemyId;
     }
 
     public function getEnemyName(): string
