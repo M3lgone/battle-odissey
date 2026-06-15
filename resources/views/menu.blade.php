@@ -3,7 +3,7 @@
         <img src="{{ asset('images/logo-battle-odissey.png') }}" alt="Battle Odyssey" class="w-[800px]">
 
         <a href="{{ route('character.select') }}" class="bg-gradient-to-b from-yellow-300 to-red-900 text-blue-950 px-8 py-3 text-xl font-bold hover:opacity-90 transition">
-            Start
+            New Game
         </a>
     </div>
 </x-layouts.app>
