@@ -12,22 +12,24 @@
         class="text-yellow-400 border border-yellow-400 py-2 hover:bg-yellow-400 hover:text-blue-950 transition">
         Defend
     </button>
-{{--
+
     <button
-        wire:click="toggleSkills"
+        wire:click="showSkillsMenu"
         class="text-yellow-400 border border-yellow-400 py-2 hover:bg-yellow-400 hover:text-blue-950 transition">
         Skill
     </button>
 
     @if($showSkills)
-        @foreach($character->skills as $skill)
-            <button
-                wire:click="selectSkill({{ $skill->id }})"
-                class="text-yellow-400 border border-yellow-400 py-2 hover:bg-yellow-400 hover:text-blue-950 transition
-                        {{ $selectedSkill == $skill->id ? 'bg-yellow-400 text-blue-950' : '' }}">
-                    {{ $skill->skill_name }}
-            </button>
-        @endforeach
+        <div class="flex flex-col gap-2 mt-1 max-h-32 overflow-y-auto">
+            @foreach($skills as $skill)
+                <button
+                    wire:click="selectSkill({{ $skill['id'] }})"
+                    class="text-yellow-400 border border-yellow-400 py-2 hover:bg-yellow-400 hover:text-blue-950 transition flex justify-between px-3 text-sm">
+                    <span>{{ $skill['skill_name'] }}</span>
+                    <span class="text-cyan-400">{{ $skill['skill_cost_magic_points'] }} MP</span>
+                </button>
+            @endforeach
+        </div>
     @endif
---}}
+
 </div>

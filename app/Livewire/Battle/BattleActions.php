@@ -8,6 +8,8 @@ use Livewire\Attributes\On;
 class BattleActions extends Component
 {
     public $selectedEnemy = null;
+    public array $skills = [];
+    public bool $showSkills = false;
 
     public function attack()
     {
@@ -22,6 +24,22 @@ class BattleActions extends Component
     public function defend()
     {
         $this->dispatch('characterDefended');
+    }
+
+    public function showSkillsMenu()
+    {
+        $this->showSkills = !$this->showSkills;
+    }
+
+    public function selectSkill($id)
+    {
+        if (!$this->selectedEnemy) {
+            return;
+        }
+
+        $this->dispatch('skillSelected', $id);
+        $this->selectedEnemy = null;
+        $this->showSkills = false;
     }
 
 
