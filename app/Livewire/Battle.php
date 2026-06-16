@@ -63,23 +63,15 @@ class Battle extends Component
         return $this->enemy->enemy_name;
     }
 
-    public function attack()
+    #[On('characterAttacked')]
+    public function onCharacterAttacked(int $damage)
     {
-        if (!$this->selectedEnemy) {
-            return;
-        }
-
-        $damage = $this->character->attack;
-
         if ($this->enemyIsDefending) {
-            $damage = max(1, $this->character->attack - $this->enemy->defense);
             $this->enemyIsDefending = false;
         }
 
         $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $damage);
         $this->addLog("You attacked {$this->getEnemyName()} for {$damage} damage.");
-        $this->selectedEnemy = null;
-
         $this->enemyTurn();
     }
 
