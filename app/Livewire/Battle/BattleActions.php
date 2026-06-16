@@ -49,6 +49,11 @@ class BattleActions extends Component
         $this->selectedEnemy = $enemyId;
     }
 
+    public function flee()
+    {
+        $this->dispatch('characterFled');
+    }
+
     public function render()
     {
         return view('livewire.battle.battle-actions');

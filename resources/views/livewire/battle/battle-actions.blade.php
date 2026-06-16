@@ -32,4 +32,10 @@
         </div>
     @endif
 
+    <button
+        wire:click="flee"
+        class="text-yellow-400 border border-yellow-400 py-2 hover:bg-yellow-400 hover:text-blue-950 transition">
+        Flee
+    </button>
+
 </div>

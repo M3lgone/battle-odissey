@@ -173,6 +173,22 @@ class Battle extends Component
         }
     }
 
+    #[On('characterFled')]
+    public function onCharacterFlee()
+    {
+        $this->characterIsDefending = false;
+
+        $escapeSuccess = rand(1, 2) === 1;
+
+        if ($escapeSuccess) {
+            return $this->redirect('/', navigate: true);
+
+        } else {
+            $this->addLog("You failed to escape! {$this->getEnemyName()} blocks your way.");
+            $this->enemyTurn();
+        }
+    }
+
     public function render()
     {
         return view('livewire.battle');
