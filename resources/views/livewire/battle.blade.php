@@ -7,7 +7,7 @@
         <livewire:battle.battle-actions/>
 
         <livewire:battle.battle-character-stats 
-            :character="$character->class"
+            :characterClass="$character->class"
             :characterCurrentHp="$characterCurrentHp"
             :characterCurrentMp="$characterCurrentMp"/>
 
