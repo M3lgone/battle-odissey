@@ -25,7 +25,8 @@ class Battle extends Component
     public array $battleLog = [];
     public bool $characterIsDefending = false;
     public bool $enemyIsDefending = false;
-    public $selectedSkill = null;
+
+    public ?string $battleResult = null;
 
     public function mount($character, $enemy)
     {
@@ -67,6 +68,10 @@ class Battle extends Component
     #[On('characterAttacked')]
     public function onCharacterAttacked()
     {
+        if (!$this->selectedEnemy) {
+            return;
+        }
+
         $this->characterIsDefending = false;
         $damage = $this->character->attack;
 
@@ -78,11 +83,17 @@ class Battle extends Component
         $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $damage);
         $this->addLog("You attacked {$this->getEnemyName()} for {$damage} damage.");
 
-        $this->enemyTurn();
+        $this->selectedEnemy = null;
+
+        $this->checkBattleResult();
+
+        if (!$this->battleResult) {
+            $this->enemyTurn();
+        }
     }
 
     #[On('characterDefended')]
-    public function onCharacterDefend()
+    public function onCharacterDefended()
     {
         $this->characterIsDefending = true;
         $this->addLog("You are defending.");
@@ -90,24 +101,14 @@ class Battle extends Component
     }
 
     #[On('skillSelected')]
-    public function selectSkill($id)
+    public function onSkillSelected($id)
     {
         if (!$this->selectedEnemy) {
             return;
         }
 
-        $this->selectedSkill = $id;
-        $this->skill();
-    }
-
-    public function skill()
-    {
-        if (!$this->selectedSkill) {
-            return;
-        }
-
         $this->characterIsDefending = false;
-        $skill = $this->character->skills->find($this->selectedSkill);
+        $skill = $this->character->skills->find($id);
 
         if ($this->characterCurrentMp < $skill->skill_cost_magic_points) {
             $this->addLog("Not enough MP to use {$skill->skill_name}.");
@@ -124,9 +125,14 @@ class Battle extends Component
 
         $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $damage);
         $this->addLog("You used {$skill->skill_name} for {$damage} damage.");
-        $this->selectedSkill = null;
 
-        $this->enemyTurn();
+        $this->selectedEnemy = null;
+
+        $this->checkBattleResult();
+
+        if (!$this->battleResult) {
+            $this->enemyTurn();
+        }
     }
 
     private function enemyTurn()
@@ -134,7 +140,6 @@ class Battle extends Component
         $action = rand(1, 3);
 
         if ($action === 1) {
-            // Attack
             $damage = $this->enemy->attack;
 
             if ($this->characterIsDefending) {
@@ -144,12 +149,10 @@ class Battle extends Component
             $this->addLog("{$this->getEnemyName()} attacked you for {$damage} damage.");
 
         } elseif ($action === 2) {
-            // Defense
             $this->enemyIsDefending = true;
             $this->addLog("{$this->getEnemyName()} is defending.");
 
         } elseif ($action === 3) {
-            // Skill
             $skill = $this->enemy->skills->random();
 
             $this->enemyCurrentMp -= $skill->skill_cost_magic_points;
@@ -162,6 +165,8 @@ class Battle extends Component
             $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
             $this->addLog("{$this->getEnemyName()} cast {$skill->skill_name} dealing {$damage} damage!");
         }
+
+        $this->checkBattleResult();
     }
 
     private function addLog(string $message): void
@@ -174,18 +179,31 @@ class Battle extends Component
     }
 
     #[On('characterFled')]
-    public function onCharacterFlee()
+    public function onCharacterFled()
     {
         $this->characterIsDefending = false;
-
         $escapeSuccess = rand(1, 2) === 1;
 
         if ($escapeSuccess) {
+            $this->battle->update(['result' => 'flee']);
             return $this->redirect('/', navigate: true);
-
         } else {
             $this->addLog("You failed to escape! {$this->getEnemyName()} blocks your way.");
             $this->enemyTurn();
+        }
+    }
+
+    private function checkBattleResult(): void
+    {
+        if ($this->enemyCurrentHp <= 0) {
+            $this->battleResult = 'win';
+            $this->battle->update(['result' => 'win']);
+            $this->addLog("Victory! You have defeated {$this->getEnemyName()}!");
+
+        } elseif ($this->characterCurrentHp <= 0) {
+            $this->battleResult = 'loss';
+            $this->battle->update(['result' => 'loss']);
+            $this->addLog("You have been defeated... Game Over.");
         }
     }
 
