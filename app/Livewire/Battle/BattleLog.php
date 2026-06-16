@@ -3,17 +3,12 @@
 namespace App\Livewire\Battle;
 
 use Livewire\Component;
-use Livewire\Attributes\On;
+use Livewire\Attributes\Reactive;
 
 class BattleLog extends Component
 {
-    public array $battleLog = [];
-
-    #[On('battleLog')]
-    public function addLog(string $message): void
-    {
-        $this->battleLog[] = $message;
-    }
+    #[Reactive]
+    public array $battleLog;
 
     public function render()
     {
