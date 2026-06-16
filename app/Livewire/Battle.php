@@ -31,7 +31,9 @@ class Battle extends Component
     {
         $this->character = Character::find($character);
         $this->character->load('skills');
+
         $this->enemy = Enemy::find($enemy);
+        $this->enemy->load('skills');
 
         $this->initializeCombatStats();
 
@@ -129,20 +131,36 @@ class Battle extends Component
 
     private function enemyTurn()
     {
-        $action = rand(1, 2);
+        $action = rand(1, 3);
 
         if ($action === 1) {
+            // Attack
             $damage = $this->enemy->attack;
 
             if ($this->characterIsDefending) {
                 $damage = max(1, $this->enemy->attack - $this->character->defense);
             }
-
             $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
             $this->addLog("{$this->getEnemyName()} attacked you for {$damage} damage.");
-        } else {
+
+        } elseif ($action === 2) {
+            // Defense
             $this->enemyIsDefending = true;
             $this->addLog("{$this->getEnemyName()} is defending.");
+
+        } elseif ($action === 3) {
+            // Skill
+            $skill = $this->enemy->skills->random();
+
+            $this->enemyCurrentMp -= $skill->skill_cost_magic_points;
+            $damage = $skill->damage_skill;
+
+            if ($this->characterIsDefending) {
+                $damage = max(1, $skill->damage_skill - $this->character->defense);
+            }
+
+            $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
+            $this->addLog("{$this->getEnemyName()} cast {$skill->skill_name} dealing {$damage} damage!");
         }
     }
 
@@ -150,8 +168,8 @@ class Battle extends Component
     {
         $this->battleLog[] = $message;
 
-        if (count($this->battleLog) > 5) {
-            \array_shift($this->battleLog);
+        if (count($this->battleLog) > 4) {
+            array_shift($this->battleLog);
         }
     }
 
