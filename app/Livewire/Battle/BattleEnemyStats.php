@@ -7,7 +7,7 @@ use Livewire\Attributes\Reactive;
 
 class BattleEnemyStats extends Component
 {
-    public $enemy;
+    public string $enemyName;
 
     #[Reactive]
     public int $enemyCurrentHp;

@@ -7,14 +7,14 @@
         <livewire:battle.battle-actions/>
 
         <livewire:battle.battle-character-stats 
-            :character="$character"
+            :character="$character->class"
             :characterCurrentHp="$characterCurrentHp"
             :characterCurrentMp="$characterCurrentMp"/>
 
         <livewire:battle.battle-log :battleLog="$battleLog"/>
 
         <livewire:battle.battle-enemy-stats 
-            :enemy="$enemy"
+            :enemyName="$enemy->enemy_name"
             :enemyCurrentHp="$enemyCurrentHp"
             :enemyCurrentMp="$enemyCurrentMp"/>
 
