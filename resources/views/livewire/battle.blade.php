@@ -4,9 +4,7 @@
 
     <div class="bg-blue-950 border-t-2 border-yellow-400 grid grid-cols-4 gap-4 p-4">
         
-        <livewire:battle.battle-actions 
-            :character="$character"
-            :enemy="$enemy"/>
+        <livewire:battle.battle-actions/>
 
         <livewire:battle.battle-character-stats 
             :character="$character"
