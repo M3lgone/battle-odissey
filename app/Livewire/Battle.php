@@ -64,23 +64,28 @@ class Battle extends Component
     }
 
     #[On('characterAttacked')]
-    public function onCharacterAttacked(int $damage)
+    public function onCharacterAttacked()
     {
+        $this->characterIsDefending = false;
+        $damage = $this->character->attack;
+
         if ($this->enemyIsDefending) {
+            $damage = max(1, $this->character->attack - $this->enemy->defense);
             $this->enemyIsDefending = false;
         }
 
         $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $damage);
         $this->addLog("You attacked {$this->getEnemyName()} for {$damage} damage.");
+
         $this->enemyTurn();
     }
 
-    public function defend()
+    #[On('characterDefended')]
+    public function onCharacterDefend()
     {
         $this->characterIsDefending = true;
         $this->addLog("You are defending.");
         $this->enemyTurn();
-
     }
 
     public function selectSkill($id)
@@ -104,6 +109,7 @@ class Battle extends Component
             return;
         }
 
+        $this->characterIsDefending = false;
         $skill = $this->character->skills->find($this->selectedSkill);
 
         if ($this->characterCurrentMp < $skill->skill_cost_magic_points) {
@@ -112,8 +118,15 @@ class Battle extends Component
         }
 
         $this->characterCurrentMp -= $skill->skill_cost_magic_points;
-        $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $skill->damage_skill);
-        $this->addLog("You used {$skill->skill_name} for {$skill->damage_skill} damage.");
+        $damage = $skill->damage_skill;
+
+        if ($this->enemyIsDefending) {
+            $damage = max(1, $skill->damage_skill - $this->enemy->defense);
+            $this->enemyIsDefending = false;
+        }
+
+        $this->enemyCurrentHp = max(0, $this->enemyCurrentHp - $damage);
+        $this->addLog("You used {$skill->skill_name} for {$damage} damage.");
         $this->selectedSkill = null;
         $this->showSkills = false;
 
@@ -129,7 +142,6 @@ class Battle extends Component
 
             if ($this->characterIsDefending) {
                 $damage = max(1, $this->enemy->attack - $this->character->defense);
-                $this->characterIsDefending = false;
             }
 
             $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
@@ -142,7 +154,7 @@ class Battle extends Component
 
     private function addLog(string $message): void
     {
-        $this->dispatch('battleLog', message: $message);
+        $this->battleLog[] = $message;
     }
 
     public function render()

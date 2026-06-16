@@ -7,11 +7,7 @@ use Livewire\Attributes\On;
 
 class BattleActions extends Component
 {
-    public $character;
-    public $enemy;
     public $selectedEnemy = null;
-    public bool $enemyIsDefending = false;
-    public bool $showSkills = false;
 
     public function attack()
     {
@@ -19,15 +15,15 @@ class BattleActions extends Component
             return;
         }
 
-        $damage = $this->character->attack;
-
-        if ($this->enemyIsDefending) {
-            $damage = max(1, $this->character->attack - $this->enemy->defense);
-        }
-
-        $this->dispatch('characterAttacked', damage: $damage);
+        $this->dispatch('characterAttacked');
         $this->selectedEnemy = null;
     }
+
+    public function defend()
+    {
+        $this->dispatch('characterDefended');
+    }
+
 
     #[On('enemySelected')]
     public function onEnemySelected($enemyId)
