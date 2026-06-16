@@ -155,6 +155,10 @@ class Battle extends Component
     private function addLog(string $message): void
     {
         $this->battleLog[] = $message;
+
+        if (count($this->battleLog) > 5) {
+            \array_shift($this->battleLog);
+        }
     }
 
     public function render()
