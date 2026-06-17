@@ -25,7 +25,10 @@ class CharacterSelect extends Component
     public function startAdventure()
     {
         if ($this->selectedCharacter) {
-            return redirect()->route('battle', ['character' => $this->selectedCharacter]);
+            return redirect()->route('battle', [
+                'character' => $this->selectedCharacter,
+                'enemy' => 1
+            ]);
         }
     }
 

@@ -24,10 +24,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CharacterSeeder::class,
-        ]);
-
-        $this->call([
             EnemySeeder::class,
+            SkillSeeder::class,
+            CharacterHasSkillSeeder::class,
+            EnemyHasSkillSeeder::class,
         ]);
     }
 }
