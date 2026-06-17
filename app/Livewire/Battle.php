@@ -8,6 +8,7 @@ use Livewire\Attributes\On;
 use App\Models\Character;
 use App\Models\Enemy;
 use App\Models\Battle as BattleModel;
+use App\Enums\BattleResult;
 
 #[Layout('components.layouts.app')]
 
@@ -213,7 +214,7 @@ class Battle extends Component
         $escapeSuccess = rand(1, 2) === 1;
 
         if ($escapeSuccess) {
-            $this->battle->update(['result' => 'flee']);
+            $this->battle->update(['result' => BattleResult::Flee->value]);
 
             $this->battlesWon = 0;
 
@@ -227,15 +228,15 @@ class Battle extends Component
     private function checkBattleResult(): void
     {
         if ($this->enemyCurrentHp <= 0) {
-            $this->battleResult = 'win';
-            $this->battle->update(['result' => 'win']);
+            $this->battleResult = BattleResult::Win->value;
+            $this->battle->update(['result' => BattleResult::Win->value]);
             $this->addLog("Victory! You have defeated {$this->getEnemyName()}!");
 
             $this->battlesWon++;
 
         } elseif ($this->characterCurrentHp <= 0) {
-            $this->battleResult = 'loss';
-            $this->battle->update(['result' => 'loss']);
+            $this->battleResult = BattleResult::Loss->value;
+            $this->battle->update(['result' => BattleResult::Loss->value]);
             $this->addLog("You have been defeated... Game Over.");
 
             $this->battlesWon = 0;
