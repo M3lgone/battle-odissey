@@ -6,7 +6,7 @@
             <span>HP</span>
             <span>{{ $characterCurrentHp }} / {{ $maxHp }}</span>
         </div>
-        <div class="w-full bg-slate-800 rounded-full h-2.5">
+        <div class="w-full bg-slate-700 rounded-full h-2.5">
             <div class="bg-red-500 h-2.5 rounded-full transition-all duration-300 ease-out" 
                  style="width: {{ max(0, ($characterCurrentHp / $maxHp) * 100) }}%">
             </div>
@@ -18,7 +18,7 @@
             <span>MP</span>
             <span>{{ $characterCurrentMp }} / {{ $maxMp }}</span>
         </div>
-        <div class="w-full bg-slate-800 rounded-full h-2.5">
+        <div class="w-full bg-slate-700 rounded-full h-2.5">
             <div class="bg-blue-500 h-2.5 rounded-full transition-all duration-300 ease-out" 
                  style="width: {{ max(0, ($characterCurrentMp / $maxMp) * 100) }}%">
             </div>

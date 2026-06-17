@@ -18,7 +18,9 @@
         <livewire:battle.battle-enemy-stats 
             :enemyName="$enemy->enemy_name"
             :enemyCurrentHp="$enemyCurrentHp"
-            :enemyCurrentMp="$enemyCurrentMp"/>
+            :enemyCurrentMp="$enemyCurrentMp"
+            :maxHp="$enemy->max_health_points"
+            :maxMp="$enemy->max_magic_points"/>
 
     </div>
 </div>

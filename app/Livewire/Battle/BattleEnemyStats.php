@@ -15,6 +15,9 @@ class BattleEnemyStats extends Component
     #[Reactive]
     public int $enemyCurrentMp;
 
+    public int $maxHp;
+    public int $maxMp;
+
     public function render()
     {
         return view('livewire.battle.battle-enemy-stats');
