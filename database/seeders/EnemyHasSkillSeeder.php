@@ -12,10 +12,15 @@ class EnemyHasSkillSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
+    {   // hack skill
         DB::table('enemy_has_skill')->insert([
             'enemy_id' => 1,
             'skill_id' => 2,
+        ]);
+        // smash skill
+        DB::table('enemy_has_skill')->insert([
+            'enemy_id' => 2,
+            'skill_id' => 3,
         ]);
     }
 }
