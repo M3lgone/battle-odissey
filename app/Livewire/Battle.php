@@ -70,6 +70,10 @@ class Battle extends Component
     #[On('characterAttacked')]
     public function onCharacterAttacked()
     {
+        if ($this->isBattleOver()) {
+            return;
+        }
+
         if (!$this->selectedEnemy) {
             return;
         }
@@ -97,6 +101,10 @@ class Battle extends Component
     #[On('characterDefended')]
     public function onCharacterDefended()
     {
+        if ($this->isBattleOver()) {
+            return;
+        }
+
         $this->characterIsDefending = true;
         $this->addLog("You are defending.");
         $this->enemyTurn();
@@ -105,6 +113,10 @@ class Battle extends Component
     #[On('skillSelected')]
     public function onSkillSelected($id)
     {
+        if ($this->isBattleOver()) {
+            return;
+        }
+
         if (!$this->selectedEnemy) {
             return;
         }
@@ -117,7 +129,7 @@ class Battle extends Component
             return;
         }
 
-        $this->characterCurrentMp -= $skill->skill_cost_magic_points;
+        $this->characterCurrentMp = max(0, $this->characterCurrentMp - $skill->skill_cost_magic_points);
         $damage = $skill->damage_skill;
 
         if ($this->enemyIsDefending) {
@@ -139,7 +151,19 @@ class Battle extends Component
 
     private function enemyTurn()
     {
+        if ($this->isBattleOver()) {
+            return;
+        }
+
         $action = rand(1, 3);
+        $skill = null;
+
+        if ($action === 3) {
+            $skill = $this->enemy->skills->random();
+            if ($this->enemyCurrentMp < $skill->skill_cost_magic_points) {
+                $action = 1;
+            }
+        }
 
         if ($action === 1) {
             $damage = $this->enemy->attack;
@@ -154,10 +178,8 @@ class Battle extends Component
             $this->enemyIsDefending = true;
             $this->addLog("{$this->getEnemyName()} is defending.");
 
-        } elseif ($action === 3) {
-            $skill = $this->enemy->skills->random();
-
-            $this->enemyCurrentMp -= $skill->skill_cost_magic_points;
+        } elseif ($action === 3 && $skill) {
+            $this->enemyCurrentMp = max(0, $this->enemyCurrentMp - $skill->skill_cost_magic_points);
             $damage = $skill->damage_skill;
 
             if ($this->characterIsDefending) {
@@ -183,6 +205,10 @@ class Battle extends Component
     #[On('characterFled')]
     public function onCharacterFled()
     {
+        if ($this->isBattleOver()) {
+            return;
+        }
+
         $this->characterIsDefending = false;
         $escapeSuccess = rand(1, 2) === 1;
 
@@ -214,6 +240,11 @@ class Battle extends Component
 
             $this->battlesWon = 0;
         }
+    }
+
+    private function isBattleOver(): bool
+    {
+        return $this->battleResult !== null || $this->characterCurrentHp <= 0 || $this->enemyCurrentHp <= 0;
     }
 
     public function render()
