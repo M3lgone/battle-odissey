@@ -28,5 +28,13 @@ class SkillSeeder extends Seeder
         'damage_skill' => 15,
         'skill_cost_magic_points' => 5,
     ]);
+
+        // Troll skill
+        Skill::create([
+        'skill_name' => 'Smash',
+        'description' => 'A big smash',
+        'damage_skill' => 25,
+        'skill_cost_magic_points' => 10,
+    ]);
     }
 }

@@ -20,5 +20,13 @@ class EnemySeeder extends Seeder
             'attack' => 10,
             'defense' => 5,
         ]);
+
+        Enemy::create([
+            'enemy_name' => 'Troll',
+            'max_health_points' => 100,
+            'max_magic_points' => 50,
+            'attack' => 18,
+            'defense' => 12,
+        ]);
     }
 }
