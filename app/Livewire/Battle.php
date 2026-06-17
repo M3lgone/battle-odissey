@@ -9,6 +9,7 @@ use App\Models\Character;
 use App\Models\Enemy;
 use App\Models\Battle as BattleModel;
 use App\Enums\BattleResult;
+use App\Enums\EnemyAction;
 
 #[Layout('components.layouts.app')]
 
@@ -150,23 +151,30 @@ class Battle extends Component
         }
     }
 
+    private function decideEnemyAction(): array
+    {
+        $action = rand(EnemyAction::Attack->value, EnemyAction::Skill->value);
+        $skill = null;
+
+        if ($action === EnemyAction::Skill->value) {
+            $skill = $this->enemy->skills->random();
+            if ($this->enemyCurrentMp < $skill->skill_cost_magic_points) {
+                $action = EnemyAction::Attack->value;
+                $skill = null;
+            }
+        }
+        return [$action, $skill];
+    }
+
     private function enemyTurn()
     {
         if ($this->isBattleOver()) {
             return;
         }
 
-        $action = rand(1, 3);
-        $skill = null;
+        [$action, $skill] = $this->decideEnemyAction();
 
-        if ($action === 3) {
-            $skill = $this->enemy->skills->random();
-            if ($this->enemyCurrentMp < $skill->skill_cost_magic_points) {
-                $action = 1;
-            }
-        }
-
-        if ($action === 1) {
+        if ($action === EnemyAction::Attack->value) {
             $damage = $this->enemy->attack;
 
             if ($this->characterIsDefending) {
@@ -175,11 +183,11 @@ class Battle extends Component
             $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
             $this->addLog("{$this->getEnemyName()} attacked you for {$damage} damage.");
 
-        } elseif ($action === 2) {
+        } elseif ($action === EnemyAction::Defend->value) {
             $this->enemyIsDefending = true;
             $this->addLog("{$this->getEnemyName()} is defending.");
 
-        } elseif ($action === 3 && $skill) {
+        } elseif ($action === EnemyAction::Skill->value && $skill) {
             $this->enemyCurrentMp = max(0, $this->enemyCurrentMp - $skill->skill_cost_magic_points);
             $damage = $skill->damage_skill;
 
