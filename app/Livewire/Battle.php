@@ -136,7 +136,6 @@ class Battle extends Component
         }
     }
 
-
     private function decideEnemyAction(): array
     {
         $action = rand(EnemyAction::Attack->value, EnemyAction::Skill->value);
@@ -152,6 +151,23 @@ class Battle extends Component
         return [$action, $skill];
     }
 
+    private function processEnemyAction(int $baseDamage, string $actionName): void
+    {
+        $damage = $baseDamage;
+
+        if ($this->characterIsDefending) {
+            $damage = max(1, $baseDamage - $this->character->defense);
+        }
+
+        $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
+
+        if ($actionName === 'Attack') {
+            $this->addLog("{$this->getEnemyName()} attacked you for {$damage} damage.");
+        } else {
+            $this->addLog("{$this->getEnemyName()} cast {$actionName} dealing {$damage} damage!");
+        }
+    }
+
     private function enemyTurn()
     {
         if ($this->isBattleOver()) {
@@ -161,13 +177,7 @@ class Battle extends Component
         [$action, $skill] = $this->decideEnemyAction();
 
         if ($action === EnemyAction::Attack->value) {
-            $damage = $this->enemy->attack;
-
-            if ($this->characterIsDefending) {
-                $damage = max(1, $this->enemy->attack - $this->character->defense);
-            }
-            $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
-            $this->addLog("{$this->getEnemyName()} attacked you for {$damage} damage.");
+            $this->processEnemyAction($this->enemy->attack, 'Attack');
 
         } elseif ($action === EnemyAction::Defend->value) {
             $this->enemyIsDefending = true;
@@ -175,14 +185,7 @@ class Battle extends Component
 
         } elseif ($action === EnemyAction::Skill->value && $skill) {
             $this->enemyCurrentMp = max(0, $this->enemyCurrentMp - $skill->skill_cost_magic_points);
-            $damage = $skill->damage_skill;
-
-            if ($this->characterIsDefending) {
-                $damage = max(1, $skill->damage_skill - $this->character->defense);
-            }
-
-            $this->characterCurrentHp = max(0, $this->characterCurrentHp - $damage);
-            $this->addLog("{$this->getEnemyName()} cast {$skill->skill_name} dealing {$damage} damage!");
+            $this->processEnemyAction($skill->damage_skill, $skill->skill_name);
         }
 
         $this->checkBattleResult();
