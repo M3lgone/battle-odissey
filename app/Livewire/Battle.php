@@ -28,6 +28,8 @@ class Battle extends Component
 
     public ?string $battleResult = null;
 
+    public int $battlesWon = 0;
+
     public function mount($character, $enemy)
     {
         $this->character = Character::find($character);
@@ -186,6 +188,9 @@ class Battle extends Component
 
         if ($escapeSuccess) {
             $this->battle->update(['result' => 'flee']);
+
+            $this->battlesWon = 0;
+
             return $this->redirect('/', navigate: true);
         } else {
             $this->addLog("You failed to escape! {$this->getEnemyName()} blocks your way.");
@@ -200,10 +205,14 @@ class Battle extends Component
             $this->battle->update(['result' => 'win']);
             $this->addLog("Victory! You have defeated {$this->getEnemyName()}!");
 
+            $this->battlesWon++;
+
         } elseif ($this->characterCurrentHp <= 0) {
             $this->battleResult = 'loss';
             $this->battle->update(['result' => 'loss']);
             $this->addLog("You have been defeated... Game Over.");
+
+            $this->battlesWon = 0;
         }
     }
 
