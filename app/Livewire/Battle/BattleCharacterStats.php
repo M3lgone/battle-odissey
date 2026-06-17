@@ -15,6 +15,9 @@ class BattleCharacterStats extends Component
     #[Reactive]
     public int $characterCurrentMp;
 
+    public int $maxHp;
+    public int $maxMp;
+
     public function render()
     {
         return view('livewire.battle.battle-character-stats');

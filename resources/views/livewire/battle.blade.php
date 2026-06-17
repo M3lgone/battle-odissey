@@ -9,7 +9,9 @@
         <livewire:battle.battle-character-stats 
             :characterClass="$character->class"
             :characterCurrentHp="$characterCurrentHp"
-            :characterCurrentMp="$characterCurrentMp"/>
+            :characterCurrentMp="$characterCurrentMp"
+            :maxHp="$character->max_health_points"
+            :maxMp="$character->max_magic_points"/>
 
         <livewire:battle.battle-log :battleLog="$battleLog"/>
 
