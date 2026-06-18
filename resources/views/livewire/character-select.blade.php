@@ -6,7 +6,7 @@
         wire:click="selectCharacter({{ $character->id }})"
         class="border-2 p-8 flex flex-col items-center gap-4 cursor-pointer transition
                {{ $selectedCharacter == $character->id ? 'border-red-500 bg-red-400/20' : 'border-yellow-400' }}">
-        <img src="{{ asset('images/avatar-warrior.png') }}" alt="Warrior" class="w-32 h-32 object-cover">
+        <img src="{{ asset('images/avatar/avatar-warrior.png') }}" alt="Warrior" class="w-32 h-32 object-cover">
         <h3 class="text-yellow-400 text-xl font-bold">{{ ucfirst($character->class) }}</h3>
         <p class="text-yellow-400">HP: {{ $character->max_health_points }}</p>
         <p class="text-yellow-400">MP: {{ $character->max_magic_points }}</p>
