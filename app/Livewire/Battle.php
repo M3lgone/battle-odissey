@@ -245,6 +245,19 @@ class Battle extends Component
         return $this->battleResult !== null || $this->characterCurrentHp <= 0 || $this->enemyCurrentHp <= 0;
     }
 
+    public function goToBetweenBattles()
+    {
+        session()->put('current_hp', $this->characterCurrentHp);
+        session()->put('current_mp', $this->characterCurrentMp);
+
+        $nextEnemyId = $this->enemy->id + 1;
+
+        return $this->redirectRoute('between-battles', [
+            'character' => $this->character->id,
+            'nextEnemy' => $nextEnemyId
+        ], navigate: true);
+    }
+
     public function render()
     {
         return view('livewire.battle');
