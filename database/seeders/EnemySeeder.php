@@ -28,5 +28,13 @@ class EnemySeeder extends Seeder
             'attack' => 18,
             'defense' => 12,
         ]);
+
+        Enemy::create([
+            'enemy_name' => 'Orc',
+            'max_health_points' => 180,
+            'max_magic_points' => 80,
+            'attack' => 22,
+            'defense' => 15,
+        ]);
     }
 }

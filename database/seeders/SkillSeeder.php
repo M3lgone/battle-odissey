@@ -36,5 +36,14 @@ class SkillSeeder extends Seeder
         'damage_skill' => 25,
         'skill_cost_magic_points' => 10,
     ]);
+
+        //Orc skill
+        Skill::create([
+        'skill_name' => 'Rampage',
+        'description' => 'A strong rampage',
+        'damage_skill' => 35,
+        'skill_cost_magic_points' => 25,
+    ]);
+
     }
 }

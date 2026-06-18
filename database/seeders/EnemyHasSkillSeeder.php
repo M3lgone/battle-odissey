@@ -22,5 +22,10 @@ class EnemyHasSkillSeeder extends Seeder
             'enemy_id' => 2,
             'skill_id' => 3,
         ]);
+        // rampage skill
+        DB::table('enemy_has_skill')->insert([
+            'enemy_id' => 3,
+            'skill_id' => 4,
+        ]);
     }
 }
