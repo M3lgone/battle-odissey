@@ -17,7 +17,7 @@
 
     <button 
         wire:click="startAdventure"
-        class="text-yellow-400 border-2 border-yellow-400 px-8 py-3 text-lg font-bold hover:bg-yellow-400 hover:text-blue-950 transition">
+        class="bg-gradient-to-b from-yellow-300 to-red-800 text-blue-950 rounded-lg px-8 py-3 text-xl font-bold transition-all transform hover:scale-105">
         Start Adventure
     </button>
 </div>
