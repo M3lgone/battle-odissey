@@ -1,4 +1,4 @@
-<div class="border-2 border-yellow-400 p-4 h-50 flex flex-col justify-start">
+<div class="border-2 border-yellow-400 rounded-lg p-4 h-50 flex flex-col justify-start">
     <h3 class="text-yellow-400 font-bold mb-2">{{ ucfirst($characterClass) }}</h3>
 
     <div class="mb-3">
