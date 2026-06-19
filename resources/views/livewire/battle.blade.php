@@ -1,6 +1,6 @@
 <div class="h-screen flex flex-col">
 
-    <livewire:battle.battle-scene :character="$character" :enemy="$enemy" />
+    <livewire:battle.battle-scene :character="$character" :enemy="$enemy" :selectedEnemy="$selectedEnemy"/>
 
     <div class="bg-blue-950 border-t-2 border-yellow-400 grid grid-cols-4 gap-4 p-4">
         

@@ -3,16 +3,18 @@
 namespace App\Livewire\Battle;
 
 use Livewire\Component;
+use Livewire\Attributes\Reactive;
 
 class BattleScene extends Component
 {
     public $character;
     public $enemy;
-    public $selectedEnemy = null;
+
+    #[Reactive]
+    public $selectedEnemy;
 
     public function selectEnemy($id)
     {
-        $this->selectedEnemy = $id;
         $this->dispatch('enemySelected', enemyId: $id);
     }
 
