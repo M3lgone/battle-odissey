@@ -21,10 +21,15 @@ class Battle extends Component
 
     public int $characterCurrentHp;
     public int $characterCurrentMp;
+
     public int $enemyCurrentHp;
     public int $enemyCurrentMp;
+
     public $selectedEnemy = null;
+    public bool $isPlayerTurn = true;
+
     public array $battleLog = [];
+
     public bool $characterIsDefending = false;
     public bool $enemyIsDefending = false;
 
@@ -132,7 +137,8 @@ class Battle extends Component
         $this->checkBattleResult();
 
         if (!$this->battleResult) {
-            $this->enemyTurn();
+            $this->isPlayerTurn = false;
+            $this->js("setTimeout(() => { \$wire.enemyTurn() }, 400)");
         }
     }
 
@@ -168,7 +174,7 @@ class Battle extends Component
         }
     }
 
-    private function enemyTurn()
+    public function enemyTurn()
     {
         if ($this->isBattleOver()) {
             return;
@@ -189,6 +195,10 @@ class Battle extends Component
         }
 
         $this->checkBattleResult();
+
+        if (!$this->battleResult) {
+            $this->isPlayerTurn = true;
+        }
     }
 
     private function addLog(string $message): void

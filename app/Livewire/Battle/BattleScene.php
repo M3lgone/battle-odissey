@@ -13,6 +13,9 @@ class BattleScene extends Component
     #[Reactive]
     public $selectedEnemy;
 
+    #[Reactive]
+    public $isPlayerTurn;
+
     public function selectEnemy($id)
     {
         $this->dispatch('enemySelected', enemyId: $id);

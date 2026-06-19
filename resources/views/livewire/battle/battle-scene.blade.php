@@ -2,7 +2,7 @@
      style="background-image: url('{{ asset('images/backgrounds/bg-' . $enemy->id . '.png') }}')">
         
     <img src="{{ asset('images/characters/warrior.png') }}" alt="Warrior" 
-         class="absolute bottom-64 left-60 w-96 h-96 object-contain">
+         class="absolute bottom-64 left-60 w-96 h-96 object-contain transition duration-300 {{ $isPlayerTurn ? 'drop-shadow-[0_0_12px_cyan]' : 'opacity-90' }}">
 
     <img src="{{ asset('images/enemies/' . strtolower($enemy->enemy_name) . '.png') }}" alt="{{ $enemy->enemy_name }}" 
          wire:click="selectEnemy({{ $enemy->id }})"
