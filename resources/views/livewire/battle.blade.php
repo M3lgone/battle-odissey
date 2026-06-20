@@ -1,5 +1,9 @@
 <div class="h-screen flex flex-col">
 
+    @if($battleResult === \App\Enums\BattleResult::Loss->value)
+        <livewire:battle.battle-game-over />
+    @endif
+
     <livewire:battle.battle-scene 
     :character="$character" 
     :enemy="$enemy" 
