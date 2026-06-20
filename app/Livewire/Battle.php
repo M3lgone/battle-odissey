@@ -257,8 +257,8 @@ class Battle extends Component
 
     public function goToBetweenBattles()
     {
-        session()->put('current_hp', $this->characterCurrentHp);
-        session()->put('current_mp', $this->characterCurrentMp);
+        session()->put('character_current_hp', $this->characterCurrentHp);
+        session()->put('character_current_mp', $this->characterCurrentMp);
 
         $nextEnemyId = $this->enemy->id + 1;
 
