@@ -23,8 +23,8 @@ class BetweenBattles extends Component
         if (!$this->nextEnemy) {
             return $this->redirect('/', navigate: true);
         }
-        $this->currentHp = session('current_hp', $this->character->max_health_points);
-        $this->currentMp = session('current_mp', $this->character->max_magic_points);
+        $this->currentHp = session('character_current_hp', $this->character->max_health_points);
+        $this->currentMp = session('character_current_mp', $this->character->max_magic_points);
     }
 
     public function continueWithoutRest()
@@ -37,8 +37,8 @@ class BetweenBattles extends Component
 
     public function restAndNext()
     {
-        session()->put('current_hp', $this->character->max_health_points);
-        session()->put('current_mp', $this->character->max_magic_points);
+        session()->put('character_current_hp', $this->character->max_health_points);
+        session()->put('character_current_mp', $this->character->max_magic_points);
 
         return $this->redirectRoute('battle', [
             'character' => $this->character->id,

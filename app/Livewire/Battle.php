@@ -57,8 +57,8 @@ class Battle extends Component
 
     private function initializeCombatStats(): void
     {
-        $this->characterCurrentHp = session('current_hp', $this->character->max_health_points);
-        $this->characterCurrentMp = session('current_mp', $this->character->max_magic_points);
+        $this->characterCurrentHp = session('character_current_hp', $this->character->max_health_points);
+        $this->characterCurrentMp = session('character_current_mp', $this->character->max_magic_points);
         $this->enemyCurrentHp = $this->enemy->max_health_points;
         $this->enemyCurrentMp = $this->enemy->max_magic_points;
     }
