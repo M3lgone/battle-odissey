@@ -1,4 +1,4 @@
-<div class="flex-1 min-h-[50vh] lg:min-h-0 bg-cover bg-center bg-no-repeat relative overflow-hidden" 
+<div class="flex-1 min-h-[50vh] lg:min-h-0 bg-cover bg-center bg-no-repeat relative overflow-hidden bg-[length:100%_100%]" 
      style="background-image: url('{{ asset('images/backgrounds/bg-' . $enemy->id . '.png') }}')">
         
     <img src="{{ asset('images/characters/warrior.png') }}" alt="Warrior" 
