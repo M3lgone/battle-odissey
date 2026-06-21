@@ -34,6 +34,7 @@
                     Continue
                 </button>
             </div>
+        @endif
         
         @else
             <livewire:battle.battle-enemy-stats 
