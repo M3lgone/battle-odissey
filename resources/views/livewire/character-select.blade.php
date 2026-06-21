@@ -1,9 +1,9 @@
-<div class="flex flex-col items-center justify-center min-h-screen gap-12 p-4">
+<div class="flex-1 w-full flex flex-col items-center justify-center min-h-screen gap-12 p-4">
     <h2 class="text-yellow-400 text-3xl font-bold uppercase tracking-widest text-center shadow-black drop-shadow-md">
         Choose Your Character
     </h2>
 
-    <div class="flex flex-row flex-wrap justify-center gap-8">
+    <div class="flex flex-col lg:flex-row lg:flex-wrap justify-center gap-8">
         @foreach($characters as $character)
         <div 
             wire:click="selectCharacter({{ $character->id }})"
