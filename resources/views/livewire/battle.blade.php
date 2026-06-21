@@ -1,4 +1,4 @@
-<div class="h-screen flex flex-col">
+<div class="flex-1 w-full flex flex-col">
 
     @if($battleResult === \App\Enums\BattleResult::Loss->value)
         <livewire:battle.battle-game-over />
@@ -13,7 +13,7 @@
     :selectedEnemy="$selectedEnemy"
     :isPlayerTurn="$isPlayerTurn"/>
 
-    <div class="bg-blue-950 border-t-2 border-yellow-400 grid grid-cols-4 gap-4 p-4">
+    <div class="bg-blue-950 border-t-2 border-yellow-400 grid grid-cols-1 sm:grid-cols-2 grid lg:grid-cols-4 gap-4 p-4">
         
         <livewire:battle.battle-actions :skills="$character->skills->toArray()"/>
 
