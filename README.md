@@ -1,58 +1,133 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="public/images/readme/logo.png" alt="Battle Odyssey Logo" width="500">
 </p>
 
-## About Laravel
+# Battle Odyssey
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A turn-based RPG built with Laravel and Livewire. The player picks a character and faces 3 consecutive battles against increasingly powerful enemies, culminating in a final boss fight.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Description
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Battle Odyssey is a turn-based RPG inspired by classic 16-bit JRPGs. The player controls a Warrior who must fight a series of enemies using a turn-based combat system with four available actions: attack, defend, use skills, and flee.
 
-## Learning Laravel
+## Preview
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<p align="center">
+  <img src="public/images/readme/screenshot-menu.png" alt="Main menu" width="280">
+  <img src="public/images/readme/screenshot-character-select.png" alt="Character selection" width="280">
+  <img src="public/images/readme/screenshot-battle.png" alt="Battle screen" width="280">
+</p>
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tech stack
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- **PHP 8.4**
+- **Laravel 13**
+- **Livewire 4** 
+- **Tailwind CSS** 
+- **MySQL**
+- **Vite**
 
-## Agentic Development
+## Features
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+- Character selection screen showing stats before starting
+- Turn-based combat system: Attack, Defend, Skill, Flee
+- Enemy AI that randomly decides between attacking, defending, or using a skill
+- Real-time HP/MP bars powered by reactive Livewire components
+- Battle log with the action history
+- Progression between battles, with the option to rest (Rest & Next) or continue without resting (Next)
+- Character state persisted between battles via session
+- Victory, Game Over, and Final Victory screens depending on the outcome
 
-```bash
-composer require laravel/boost --dev
+## Architecture
 
-php artisan boost:install
+The project follows Laravel's MVC pattern, with Livewire handling the interactive layer without needing traditional controllers for the dynamic views.
+
+The battle screen is split into independent Livewire components, each responsible for its own visual state:
+
+```
+Battle (parent component - global combat state)
+├── BattleScene          → background and characters on screen
+├── BattleActions         → action menu (Attack, Defend, Skill, Flee)
+├── BattleCharacterStats  → character HP/MP
+├── BattleEnemyStats      → enemy HP/MP
+├── BattleLog             → action history
+├── BattleVictory         → final victory screen
+└── BattleGameOver        → defeat screen
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Parent-child component communication is handled through Livewire's event system (`dispatch` / `#[On]`), and properties that need real-time updates in child components use the `#[Reactive]` attribute.
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Installation
 
-## Code of Conduct
+### Prerequisites
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- PHP >= 8.3
+- Composer
+- Node.js and npm
+- MySQL
 
-## Security Vulnerabilities
+### Steps
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Clone the repository:
+   ```bash
+   git clone <https://github.com/M3lgone/battle-odissey.git>
+   cd battle-odyssey
+   ```
 
-## License
+2. Install PHP dependencies:
+   ```bash
+   composer install
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+3. Install Node dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Copy the environment file and generate the app key:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+5. Configure the database in the `.env` file:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=battle_odissey
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+6. Run migrations and seeders:
+   ```bash
+   php artisan migrate --seed
+   ```
+
+7. Compile assets:
+   ```bash
+   npm run dev
+   ```
+
+8. Start the server:
+   ```bash
+   php artisan serve
+   ```
+
+9. Open your browser at [http://localhost:8000]
+
+## Game flow
+
+1. **Main menu** → the player clicks "New Game"
+2. **Character selection** → the available character's stats are displayed
+3. **Battle 1** → turn-based combat against the Goblin
+4. **Progression** → after winning, the player chooses to continue with current stats or rest before the next battle
+5. **Battle 2** → combat against the Troll
+6. **Battle 3 (Boss)** → final combat against the Orc
+7. **Final Victory** or **Game Over** depending on the outcome, returning to the main menu
+
+## Author
+
+Project developed by Ismael Gonzalez
