@@ -6,7 +6,7 @@
     <title>Battle Odyssey</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-blue-950 min-h-screen">
+<body class="bg-blue-950 min-h-screen flex flex-col text-white">
     {{ $slot }}
 </body>
 </html>
