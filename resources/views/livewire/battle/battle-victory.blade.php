@@ -1,11 +1,11 @@
-<div class="fixed inset-0 flex items-center justify-center bg-blue-950 border-8 border-yellow-400 z-50">
+<div class="fixed inset-0 flex items-center justify-center bg-blue-950 border-8 border-yellow-400 z-50 px-4">
     <div class="text-center flex flex-col items-center">
         
-        <h1 class="text-6xl md:text-8xl font-bold text-yellow-400 mb-6 tracking-widest">
+        <h1 class="text-5xl md:text-7xl font-bold text-yellow-400 mb-6 tracking-widest">
             VICTORY!
         </h1>
         
-        <p class="text-gray-300 text-2xl mb-12">
+        <p class="text-gray-300 text-lg md:text-xl mb-12">
             The final boss has fallen. The realm is safe... for now.
         </p>
 
