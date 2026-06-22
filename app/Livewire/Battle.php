@@ -268,6 +268,11 @@ class Battle extends Component
         ], navigate: true);
     }
 
+    public function isFinalBoss(): bool
+    {
+        return $this->enemy->id === 3;
+    }
+
     public function render()
     {
         return view('livewire.battle');

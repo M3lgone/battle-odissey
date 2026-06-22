@@ -1,15 +1,15 @@
-<div class="h-screen flex flex-col items-center justify-center bg-blue-950 text-white p-8">
+<div class="flex-1 w-full flex flex-col items-center justify-center bg-blue-950 text-white p-8">
     
     <h1 class="text-5xl font-extrabold text-yellow-400 mb-8 uppercase tracking-widest drop-shadow-lg">
         Victory!
     </h1>
 
     <div class="bg-blue-940 border border-yellow-400 rounded-lg p-8 max-w-2xl w-full mb-10 shadow-2xl text-center">
-        <p class="text-white text-2xl mb-6">
+        <p class="text-white text-xl md:text-2xl mb-6">
             You defeated your enemy. The next challenge.. <span class="text-red-700 font-bold uppercase">{{ $nextEnemy->enemy_name }}</span>.
         </p>
 
-        <div class="flex justify-around items-center border-t border-stone-700 pt-6">
+        <div class="flex flex-col sm:flex-row justify-around items-center border-t border-stone-700 pt-6">
             <div class="text-lg">
                 <span class="text-yellow-400 block mb-1">Current HP</span>
                 <span class="text-red-400 font-bold text-2xl">{{ $currentHp }} / {{ $character->max_health_points }}</span>

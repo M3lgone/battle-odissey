@@ -24,12 +24,20 @@ class CharacterSelect extends Component
 
     public function startAdventure()
     {
-        if ($this->selectedCharacter) {
-            return redirect()->route('battle', [
+        if (!$this->selectedCharacter) {
+            return; 
+        }
+
+        $character = Character::find($this->selectedCharacter);
+        
+        session()->put('characterCurrentHp', $character->max_health_points);
+        session()->put('characterCurrentMp', $character->max_magic_points);
+        session()->put('battles_won', 0);
+
+        return redirect()->route('battle', [
                 'character' => $this->selectedCharacter,
                 'enemy' => 1
             ]);
-        }
     }
 
     public function render()
