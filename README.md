@@ -4,11 +4,9 @@
 
 # Battle Odyssey
 
-A turn-based RPG built with Laravel and Livewire. The player picks a character and faces 3 consecutive battles against increasingly powerful enemies, culminating in a final boss fight.
-
 ## Description
 
-Battle Odyssey is a turn-based RPG inspired by classic 16-bit JRPGs. The player controls a Warrior who must fight a series of enemies using a turn-based combat system with four available actions: attack, defend, use skills, and flee.
+A turn-based RPG built with Laravel and Livewire, inspired by classic 16-bit JRPGs. The player controls a Warrior who faces 3 consecutive battles against increasingly powerful enemies, culminating in a final boss fight. Combat uses four actions: attack, defend, use skills, and flee.
 
 ## Preview
 
@@ -71,7 +69,7 @@ Parent-child component communication is handled through Livewire's event system 
 
 1. Clone the repository:
    ```bash
-   git clone <https://github.com/M3lgone/battle-odissey.git>
+   git clone https://github.com/M3lgone/battle-odissey.git
    cd battle-odyssey
    ```
 
